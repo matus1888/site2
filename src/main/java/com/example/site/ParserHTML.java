@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParserHTML {
-    private static String urlToJsoup = "https://sochi.hh.ru/resumes/programmist";
+
+   // private static String urlToJsoup = "https://sochi.hh.ru/resumes/programmist";
+    private static String urlToJsoup = "https://sochi.hh.ru/resumes/muzykant";
+
     public static Integer lastTotalProgrammers = 0;
     public static List pagesUrl = new ArrayList();// список ссылок на страницы по 20 чел
     public static List<String> userLinks = new ArrayList<>();// список ссылок на каждого человека
