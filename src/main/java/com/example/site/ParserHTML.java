@@ -13,24 +13,29 @@ public class ParserHTML {
    // private static String urlToJsoup = "https://sochi.hh.ru/resumes/programmist";
     private static String urlToJsoup = "https://sochi.hh.ru/resumes/muzykant";
 
-    public static Integer lastTotalProgrammers = 0;
+    public static Integer lastTotalProgrammers=0;
     public static List pagesUrl = new ArrayList();// список ссылок на страницы по 20 чел
     public static List<String> userLinks = new ArrayList<>();// список ссылок на каждого человека
 
     //возвращает общее количество программистов
     public static Integer getTotalProgrammers() {
-        Document DOMSite = null;
-        {
-            try {
-                DOMSite = Jsoup.connect(urlToJsoup).get();
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Please pay attention to the site address");
+        if (lastTotalProgrammers != 0) {
+            return lastTotalProgrammers;
+        } else {
+            Document DOMSite = null;
+            {
+                try {
+                    DOMSite = Jsoup.connect(urlToJsoup).get();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("Please pay attention to the site address");
+                }
             }
+            String[] splitStr = DOMSite.getElementsByAttributeValue("data-qa", "resumes-total-found").text().split(" ");
+            String stringTotalProgrammers = splitStr[1];
+            lastTotalProgrammers = Integer.valueOf(stringTotalProgrammers);
+            return lastTotalProgrammers;
         }
-        String stringTotalProgrammers = DOMSite.getElementsByAttributeValue("data-qa", "resumes-total-found").text().split(" ")[1];
-        lastTotalProgrammers = Integer.valueOf(stringTotalProgrammers);
-        return Integer.valueOf(stringTotalProgrammers);
     }
 
     //    метод создает ссылки на страницы по 20 чел на каждой (pagesUrl)
